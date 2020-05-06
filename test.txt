@@ -1,0 +1,5 @@
+	hellonotepad
+		tabs
+					
+g
+tabs    stop.
