@@ -19,125 +19,126 @@ class Editor(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
-        self.filename = ""
+        self.file_name = ""
         self.changes_saved = True
         self.initUI()
 
     def initToolbar(self):  # створення панелі інструментів
 
         # Create
-        self.actionNew = QtWidgets.QAction(QtGui.QIcon("icons/new.png"),
+        self.actionNew = QtWidgets.QAction(QtGui.QIcon("images/new_image.png"),
                                            "Створити", self)
+        self.actionNew.setStatusTip("Створити новий документ.")
         self.actionNew.setShortcut("Ctrl+N")
-        self.actionNew.setStatusTip("Create a new document from scratch.")
         self.actionNew.triggered.connect(self.new_file)
 
+
         # Open
-        self.actionOpen = QtWidgets.QAction(QtGui.QIcon("icons/open.png"),
+        self.actionOpen = QtWidgets.QAction(QtGui.QIcon("images/open_image.png"),
                                             "Відкрити", self)
-        self.actionOpen.setStatusTip("Open existing document")
+        self.actionOpen.setStatusTip("Відкрити існуючий документ.")
         self.actionOpen.setShortcut("Ctrl+O")
         self.actionOpen.triggered.connect(self.open_file)
 
         # Save
-        self.actionSave = QtWidgets.QAction(QtGui.QIcon("icons/save.png"),
+        self.actionSave = QtWidgets.QAction(QtGui.QIcon("images/save_image.png"),
                                             "Зберегти", self)
-        self.actionSave.setStatusTip("Save document")
+        self.actionSave.setStatusTip("Зберегти документ.")
         self.actionSave.setShortcut("Ctrl+S")
         self.actionSave.triggered.connect(self.save_file)
 
         # Print
-        self.actionPrint = QtWidgets.QAction(QtGui.QIcon("icons/print.png"),
+        self.actionPrint = QtWidgets.QAction(QtGui.QIcon("images/print_image.png"),
                                              "Друкувати", self)
-        self.actionPrint.setStatusTip("Print document")
+        self.actionPrint.setStatusTip("Друкувати документ.")
         self.actionPrint.setShortcut("Ctrl+P")
         self.actionPrint.triggered.connect(self.preview_file)
 
         # Edit (delete all tabs and extra spaces)
-        self.actionFormat = QtWidgets.QAction(QtGui.QIcon("icons/preview.png"),
+        self.actionFormat = QtWidgets.QAction(QtGui.QIcon("images/preview_image.png"),
                                               "Форматувати таби і пробіли", self)
-        self.actionFormat.setStatusTip("Delete all tabs and spaces.")
+        self.actionFormat.setStatusTip("Видалити пробіли і табуляції.")
         self.actionFormat.triggered.connect(self.format_text)
 
         # View HTML
-        self.actionViewHtml = QtWidgets.QAction(QtGui.QIcon("icons/preview.png"),
+        self.actionViewHtml = QtWidgets.QAction(QtGui.QIcon("images/preview_image.png"),
                                                 "Переглянути HTML сторінку", self)
-        self.actionViewHtml.setStatusTip("Preview html page.")
+        self.actionViewHtml.setStatusTip("Переглянути HTML сторінку .")
         self.actionViewHtml.triggered.connect(self.open_html_file)
 
         # Cut
-        self.actionCut = QtWidgets.QAction(QtGui.QIcon("icons/cut.png"),
+        self.actionCut = QtWidgets.QAction(QtGui.QIcon("images/cut_image.png"),
                                            "Вирізати", self)
-        self.actionCut.setStatusTip("Delete and copy text to clipboard")
+        self.actionCut.setStatusTip("Видалити і скопіювати в буфер.")
         self.actionCut.setShortcut("Ctrl+X")
         self.actionCut.triggered.connect(self.text_field.cut)
 
         # Copy
-        self.actionCopy = QtWidgets.QAction(QtGui.QIcon("icons/copy.png"),
+        self.actionCopy = QtWidgets.QAction(QtGui.QIcon("images/copy_image.png"),
                                             "Копіювати", self)
-        self.actionCopy.setStatusTip("Copy text to clipboard")
+        self.actionCopy.setStatusTip("Копіювати в буфер обміну.")
         self.actionCopy.setShortcut("Ctrl+C")
         self.actionCopy.triggered.connect(self.text_field.copy)
 
         # Paste
-        self.actionPaste = QtWidgets.QAction(QtGui.QIcon("icons/paste.png"),
+        self.actionPaste = QtWidgets.QAction(QtGui.QIcon("images/paste_image.png"),
                                              "Вставити", self)
-        self.actionPaste.setStatusTip("Paste text from clipboard")
+        self.actionPaste.setStatusTip("Вставити з буферу обміну.")
         self.actionPaste.setShortcut("Ctrl+V")
         self.actionPaste.triggered.connect(self.text_field.paste)
 
         # Undo
-        self.actionUndo = QtWidgets.QAction(QtGui.QIcon("icons/undo.png"),
+        self.actionUndo = QtWidgets.QAction(QtGui.QIcon("images/undo_image.png"),
                                             "Крок назад", self)
-        self.actionUndo.setStatusTip("Undo last action")
+        self.actionUndo.setStatusTip("Крок назад.")
         self.actionUndo.setShortcut("Ctrl+Z")
         self.actionUndo.triggered.connect(self.text_field.undo)
 
         # Redo
-        self.actionRedo = QtWidgets.QAction(QtGui.QIcon("icons/redo.png"),
+        self.actionRedo = QtWidgets.QAction(QtGui.QIcon("images/redo_image.png"),
                                             "Крок вперед", self)
-        self.actionRedo.setStatusTip("Redo last undone thing")
+        self.actionRedo.setStatusTip("Повернути крок назад.")
         self.actionRedo.setShortcut("Ctrl+Y")
         self.actionRedo.triggered.connect(self.text_field.redo)
 
         # Find
-        self.actionFind = QtWidgets.QAction(QtGui.QIcon("icons/find.png"),
+        self.actionFind = QtWidgets.QAction(QtGui.QIcon("images/find_image.png"),
                                             "Знайти", self)
-        self.actionFind.setStatusTip("Search through files.")
+        self.actionFind.setStatusTip("Пошук по файлам.")
         self.actionFind.triggered.connect(self.search)
 
         # About program
-        self.actionAbout = QtWidgets.QAction(QtGui.QIcon("icons/about.png"),
+        self.actionAbout = QtWidgets.QAction(QtGui.QIcon("images/about_image.png"),
                                              "Про програму", self)
         self.actionAbout.setShortcut("Ctrl+I")
-        self.actionAbout.setStatusTip("Details about program.")
+        self.actionAbout.setStatusTip("Деталі програми.")
         self.actionAbout.triggered.connect(self.about_program)
 
         # Task: copy + new + paste
-        self.actionCNP = QtWidgets.QAction(QtGui.QIcon("icons/cnp.png"),
+        self.actionCNP = QtWidgets.QAction(QtGui.QIcon("images/cnp_image.png"),
                                            "Скопіювати + Створити + Додати", self)
         self.actionCNP.setShortcut("Ctrl+Alt+N")
-        self.actionCNP.setStatusTip("Task: copy + new + paste")
+        self.actionCNP.setStatusTip("За завданням: скопіювати+створити+додати")
         self.actionCNP.triggered.connect(self.copy_new_paste)
 
         # Insert bullet list
-        actionBulletList = QtWidgets.QAction(QtGui.QIcon("icons/bullet.png"),
+        actionBulletList = QtWidgets.QAction(QtGui.QIcon("images/bullet_image.png"),
                                              "Вставити список", self)
-        actionBulletList.setStatusTip("Insert bullet list")
+        actionBulletList.setStatusTip("Вставити список крапкою.")
         actionBulletList.setShortcut("Ctrl+Shift+B")
         actionBulletList.triggered.connect(self.insertBulletList)
 
         # Insert number list
-        actionNumberedList = QtWidgets.QAction(QtGui.QIcon("icons/number.png"),
+        actionNumberedList = QtWidgets.QAction(QtGui.QIcon("images/number_image.png"),
                                                "Вставити нумерований список", self)
-        actionNumberedList.setStatusTip("Insert numbered list")
+        actionNumberedList.setStatusTip("Вставити нумерований список.")
         actionNumberedList.setShortcut("Ctrl+Shift+L")
         actionNumberedList.triggered.connect(self.insertNumberedList)
 
         # Insert image
-        actionImageInsert = QtWidgets.QAction(QtGui.QIcon("icons/image.png"),
+        actionImageInsert = QtWidgets.QAction(QtGui.QIcon("images/image_image.png"),
                                               "Вставити зображення", self)
-        actionImageInsert.setStatusTip("Insert image")
+        actionImageInsert.setStatusTip("Вставити зображення.")
         actionImageInsert.setShortcut("Ctrl+Shift+I")
         actionImageInsert.triggered.connect(self.insertImage)
 
@@ -146,8 +147,6 @@ class Editor(QtWidgets.QMainWindow):
         self.toolbar.addAction(self.actionNew)
         self.toolbar.addAction(self.actionOpen)
         self.toolbar.addAction(self.actionSave)
-
-        self.toolbar.addSeparator()
 
         self.toolbar.addAction(self.actionPrint)
         self.toolbar.addAction(self.actionViewHtml)
@@ -208,11 +207,11 @@ class Editor(QtWidgets.QMainWindow):
         self.initFormatbar()
         self.initMenubar()
 
-        self.text_field.setTabStopWidth(33)
+        self.text_field.setTabStopWidth(35)
 
         self.setCentralWidget(self.text_field)
 
-        # Initialize a statusbar for the window
+        # Initialize a statusbar
         self.statusbar = self.statusBar()
 
         # If the cursor position changes, displays the line and column number
@@ -221,7 +220,7 @@ class Editor(QtWidgets.QMainWindow):
         # x, y, width, height
         self.setGeometry(500, 100, 1030, 800)
         self.setWindowTitle("Текстовий редактор")
-        self.setWindowIcon(QtGui.QIcon("icons/icon.png"))
+        self.setWindowIcon(QtGui.QIcon("images/icon_image.png"))
 
         self.text_field.textChanged.connect(self.changed_check)
 
@@ -235,32 +234,32 @@ class Editor(QtWidgets.QMainWindow):
 
     def open_file(self):
 
-        self.filename = QtWidgets.QFileDialog.getOpenFileName(self,
+        self.file_name = QtWidgets.QFileDialog.getOpenFileName(self,
                                         'Open File', ".", "(*.html);;(*.txt)")[0]
         try:
-            if self.filename:
-                with open(self.filename, "rt") as file:
+            if self.file_name:
+                with open(self.file_name, "rt") as file:
                     self.text_field.setPlainText(file.read())
         except:
             print("Error: File does not exist or contain non-text elements.")
 
     def open_html_file(self):
 
-        with open(self.filename, "rt") as file:
+        with open(self.file_name, "rt") as file:
             self.text_field.setText(file.read())
 
     def save_file(self):
 
-        if not self.filename:
-            self.filename = QtWidgets.QFileDialog.getSaveFileName(self,
+        if not self.file_name:
+            self.file_name = QtWidgets.QFileDialog.getSaveFileName(self,
                                         'Save File', ".", "(*.html);;(*.txt)")[0]
 
-        if self.filename:
+        if self.file_name:
             # Append extension if not there yet
-            if not self.filename.endswith(".txt"):
-                self.filename += ".txt"
+            if not self.file_name.endswith(".txt"):
+                self.file_name += ".txt"
 
-            with open(self.filename, "wt") as file:
+            with open(self.file_name, "wt") as file:
                 file.write(self.text_field.toHtml())
 
             self.changes_saved = True
@@ -301,13 +300,13 @@ class Editor(QtWidgets.QMainWindow):
 
     def insertImage(self):
 
-        filename = \
+        file_name = \
             QtWidgets.QFileDialog.getOpenFileName(self, 'Вставити зображення', ".",
-                                            "Images (*.png *.xpm *.jpg *.bmp *.gif)")[0]
+                                            "Images (*.png *.jpg *.gif)")[0]
 
-        if filename:
+        if file_name:
             # Create image object
-            image = QtGui.QImage(filename)
+            image = QtGui.QImage(file_name)
 
             # Error if unloadable
             if image.isNull():
@@ -319,7 +318,7 @@ class Editor(QtWidgets.QMainWindow):
                 popup.show()
             else:
                 cursor = self.text_field.textCursor()
-                cursor.insertImage(image, filename)
+                cursor.insertImage(image, file_name)
 
     def about_program(self):
 
@@ -406,13 +405,9 @@ class Editor(QtWidgets.QMainWindow):
                 event.ignore()
 
 
-def main():
-
+if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     main = Editor()
     main.show()
     sys.exit(app.exec_())
 
-
-if __name__ == "__main__":
-    main()
